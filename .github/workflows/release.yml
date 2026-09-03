@@ -63,9 +63,6 @@ jobs:
         with:
           fetch-depth: 0
           persist-credentials: false
-      - run: |
-          # ensure builds/docker/prepare-build.sh is executable
-          chmod +x builds/docker/prepare-build.sh
 
       - name: Lint Codebase
         uses: camalot/actions/smells/lint@v1
@@ -73,7 +70,6 @@ jobs:
           # Cannot use the default GITHUB_TOKEN as it cannot read from other repositories
           token: ${{ github.token }}
           default_branch: main
-          delete_previous_comment: true
           super_linter_env_file: .github/linters/super-linter.env
 
   release:
