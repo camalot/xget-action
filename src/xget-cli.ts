@@ -23,5 +23,8 @@ export function buildXgetArgs(inputs: XgetCliInputs): string[] {
     args.push('--ignore', pattern)
   }
 
+  args.push('--to', '/usr/local/bin')
+  args.push('--verify')
+
   return args
 }
