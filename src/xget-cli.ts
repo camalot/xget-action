@@ -4,6 +4,7 @@ export interface XgetCliInputs {
   prerelease: boolean
   assetFilters: string[]
   ignore: string[]
+  skipVerify: boolean
 }
 
 /** Builds the argument list for `xget <target> [flags]` from the action inputs. */
@@ -24,7 +25,9 @@ export function buildXgetArgs(inputs: XgetCliInputs): string[] {
   }
 
   args.push('--to', '/usr/local/bin')
-  args.push('--verify')
+  if (!inputs.skipVerify) {
+    args.push('--verify')
+  }
 
   return args
 }

@@ -40,6 +40,11 @@ inputs:
     required: false
     default: ''
 
+  skip-verify:
+    description: 'Whether to skip verification of the downloaded package. By default, verification is performed unless this is set to true.'
+    required: false
+    default: 'false'
+
 outputs:
   xget-version:
     description: 'The version of xget that was installed'
