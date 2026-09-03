@@ -1,0 +1,51 @@
+---
+name: 'xget Action'
+description: 'Installs the xget tool (caching the binary) and uses it to install a package'
+branding:
+  icon: 'download'
+  color: 'blue'
+
+inputs:
+  xget-version:
+    description: 'Version of xget to install, e.g. v2.0.0 (default: latest)'
+    required: false
+    default: 'latest'
+
+  token:
+    description: 'GitHub token for authentication'
+    required: false
+    default: '${{ github.token }}'
+
+  package:
+    description: 'Package to install with xget, e.g. owner/repo'
+    required: true
+
+  tag:
+    description: 'Tagged release of the package to install (default: latest)'
+    required: false
+    default: ''
+
+  prerelease:
+    description: 'Whether to include prerelease versions of the package'
+    required: false
+    default: 'false'
+
+  asset-filters:
+    description: 'Filters to apply to the assets of the package; one per line, may be specified multiple times'
+    required: false
+    default: ''
+
+  ignore:
+    description: 'Patterns of assets to ignore; one per line, may be specified multiple times'
+    required: false
+    default: ''
+
+outputs:
+  xget-version:
+    description: 'The version of xget that was installed'
+
+runs:
+  using: node24
+  main: dist/setup/index.js
+  post: dist/cache-save/index.js
+  post-if: success()

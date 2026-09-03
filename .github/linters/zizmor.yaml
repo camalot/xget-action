@@ -1,0 +1,15 @@
+---
+rules:
+  unpinned-uses:
+    config:
+      policies:
+        '*': any
+  secrets-outside-env:
+    disable: true
+  superfluous-actions:
+    disable: true
+  ref-confusion:
+    disable: true
+  artipacked:
+    ignore:
+      - release.yml
