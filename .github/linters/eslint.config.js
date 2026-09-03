@@ -7,7 +7,39 @@ import prettier from 'eslint-config-prettier'
 import globals from 'globals'
 
 export default [
+  // 1. GLOBAL SETTINGS OVERRIDE (Applies to all files)
+  {
+    settings: {
+      // Both namespaces ensure eslint-plugin-n captures the configuration
+      n: {
+        tryExtensions: ['.js', '.json', '.node', '.ts', '.tsx'],
+        allowModules: [
+          '@actions/core',
+          '@actions/cache',
+          '@actions/exec',
+          '@actions/tool-cache',
+          '@actions/http-client',
+          '@jest/globals'
+        ]
+      },
+      node: {
+        tryExtensions: ['.js', '.json', '.node', '.ts', '.tsx'],
+        allowModules: [
+          '@actions/core',
+          '@actions/cache',
+          '@actions/exec',
+          '@actions/tool-cache',
+          '@actions/http-client',
+          '@jest/globals'
+        ]
+      }
+    }
+  },
+
+  // 2. RECOMMENDED BASE RULES
   js.configs.recommended,
+
+  // 3. TYPESCRIPT SOURCE FILES
   {
     files: ['**/*.ts'],
     languageOptions: {
@@ -24,24 +56,13 @@ export default [
       '@typescript-eslint': tsPlugin,
       n: nodePlugin
     },
-    // Add settings here for your main source files
-    settings: {
-      n: {
-        tryExtensions: ['.js', '.json', '.node', '.ts', '.tsx'],
-        allowModules: [
-          '@actions/core',
-          '@actions/cache',
-          '@actions/exec',
-          '@actions/tool-cache',
-          '@actions/http-client'
-        ]
-      }
-    },
     rules: {
       ...tsPlugin.configs.recommended.rules,
       '@typescript-eslint/no-unused-vars': 'error'
     }
   },
+
+  // 4. JEST TEST FILES
   {
     files: ['__tests__/**/*.ts'],
     plugins: { jest },
@@ -50,19 +71,12 @@ export default [
         ...globals.jest
       }
     },
-    // Add settings here for your test files
-    settings: {
-      n: {
-        tryExtensions: ['.js', '.json', '.node', '.ts', '.tsx'],
-        allowModules: [
-          '@jest/globals'
-        ]
-      }
-    },
     rules: {
       ...jest.configs.recommended.rules
     }
   },
+
+  // 5. FORMATTING CODE SYNC
   prettier,
   {
     ignores: ['dist/**', 'lib/**', 'node_modules/**']

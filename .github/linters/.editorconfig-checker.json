@@ -5,8 +5,12 @@
   "SpacesAfterTabs": false,
   "NoColor": false,
   "Exclude": [
+     "^dist/",
     "testfiles",
-    "dist"
+    "^\\.editorconfig$",
+    "^\\.gitattributes$",
+    "^\\.gitignore$",
+    "^\\.prettierignore$"
   ],
   "AllowedContentTypes": [],
   "PassedFiles": [],

@@ -13,10 +13,11 @@ max_line_length = 240
 indent_style = tab
 
 [cliff.toml]
-line_length = unset
+max_line_length = unset
 
 [.gitattributes, .gitignore, .prettierignore, .editorconfig]
 insert_final_newline = unset
+end_of_line = unset
 
 
 # Documentation files configuration
