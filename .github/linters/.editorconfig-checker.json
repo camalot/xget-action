@@ -5,7 +5,7 @@
   "SpacesAfterTabs": false,
   "NoColor": false,
   "Exclude": [
-     "^dist/",
+    "^dist/",
     "testfiles",
     "^\\.editorconfig$",
     "^\\.gitattributes$",
