@@ -24,6 +24,19 @@ export default [
       '@typescript-eslint': tsPlugin,
       n: nodePlugin
     },
+    // Add settings here for your main source files
+    settings: {
+      n: {
+        tryExtensions: ['.js', '.json', '.node', '.ts', '.tsx'],
+        allowModules: [
+          '@actions/core',
+          '@actions/cache',
+          '@actions/exec',
+          '@actions/tool-cache',
+          '@actions/http-client'
+        ]
+      }
+    },
     rules: {
       ...tsPlugin.configs.recommended.rules,
       '@typescript-eslint/no-unused-vars': 'error'
@@ -31,10 +44,19 @@ export default [
   },
   {
     files: ['__tests__/**/*.ts'],
-    plugins: {jest},
+    plugins: { jest },
     languageOptions: {
       globals: {
         ...globals.jest
+      }
+    },
+    // Add settings here for your test files
+    settings: {
+      n: {
+        tryExtensions: ['.js', '.json', '.node', '.ts', '.tsx'],
+        allowModules: [
+          '@jest/globals'
+        ]
       }
     },
     rules: {

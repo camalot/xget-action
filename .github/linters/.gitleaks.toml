@@ -1,4 +1,13 @@
 [allowlist]
   regexes = [
-    '''abc123xyz456'''
+    '''abc123xyz456''',
+    # Azure Storage Emulator well-known dev account key (public, documented by
+    # Microsoft), bundled into dist/ from @azure/storage-common's constants.js.
+    # https://learn.microsoft.com/azure/storage/common/storage-configure-connection-string#connect-to-the-emulator-account-using-the-well-known-account-name-and-key
+    '''Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==''',
+  ]
+  paths = [
+    # dist/ is generated build output (ncc-bundled node_modules), not source we
+    # can edit directly — real secrets are prevented via source review instead.
+    '''^dist/'''
   ]
