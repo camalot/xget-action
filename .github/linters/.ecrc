@@ -5,7 +5,8 @@
   "SpacesAfterTabs": false,
   "NoColor": false,
   "exclude": [
-    "testfiles"
+    "testfiles",
+    "dist"
   ],
   "AllowedContentTypes": [],
   "PassedFiles": [],
