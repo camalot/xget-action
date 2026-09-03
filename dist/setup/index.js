@@ -96270,7 +96270,8 @@ function getInputs() {
         tag: getInput('tag'),
         prerelease: getBooleanInput('prerelease'),
         assetFilters: getMultilineInput('asset-filters'),
-        ignore: getMultilineInput('ignore')
+        ignore: getMultilineInput('ignore'),
+        skipVerify: getBooleanInput('skip-verify')
     };
 }
 
@@ -96420,7 +96421,9 @@ function buildXgetArgs(inputs) {
         args.push('--ignore', pattern);
     }
     args.push('--to', '/usr/local/bin');
-    args.push('--verify');
+    if (!inputs.skipVerify) {
+        args.push('--verify');
+    }
     return args;
 }
 

@@ -9,7 +9,8 @@ describe('buildXgetArgs', () => {
         tag: '',
         prerelease: false,
         assetFilters: [],
-        ignore: []
+        ignore: [],
+        skipVerify: false
       })
     ).toEqual(['fake/package', '--to', '/usr/local/bin', '--verify'])
   })
@@ -21,7 +22,8 @@ describe('buildXgetArgs', () => {
         tag: 'v1.2.3',
         prerelease: true,
         assetFilters: ['~\\.tar\\.gz'],
-        ignore: ['~\\.sbom\\.json$']
+        ignore: ['~\\.sbom\\.json$'],
+        skipVerify: false
       })
     ).toEqual([
       'fake/package',
@@ -45,7 +47,8 @@ describe('buildXgetArgs', () => {
         tag: '',
         prerelease: false,
         assetFilters: ['~\\.tar\\.gz', '~\\.zip$'],
-        ignore: ['~\\.sbom\\.json$', '~\\.sig$']
+        ignore: ['~\\.sbom\\.json$', '~\\.sig$'],
+        skipVerify: false
       })
     ).toEqual([
       'fake/package',
@@ -70,8 +73,22 @@ describe('buildXgetArgs', () => {
         tag: 'latest',
         prerelease: false,
         assetFilters: [],
-        ignore: []
+        ignore: [],
+        skipVerify: false
       })
     ).toEqual(['fake/package', '--to', '/usr/local/bin', '--verify'])
+  })
+
+  it('omits --verify when skipVerify is true', () => {
+    expect(
+      buildXgetArgs({
+        package: 'fake/package',
+        tag: '',
+        prerelease: false,
+        assetFilters: [],
+        ignore: [],
+        skipVerify: true
+      })
+    ).toEqual(['fake/package', '--to', '/usr/local/bin'])
   })
 })
