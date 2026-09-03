@@ -11,7 +11,7 @@ describe('buildXgetArgs', () => {
         assetFilters: [],
         ignore: []
       })
-    ).toEqual(['fake/package'])
+    ).toEqual(['fake/package', '--to', '/usr/local/bin', '--verify'])
   })
 
   it('includes tag, prerelease, asset filters, and ignore', () => {
@@ -31,7 +31,10 @@ describe('buildXgetArgs', () => {
       '--asset',
       '~\\.tar\\.gz',
       '--ignore',
-      '~\\.sbom\\.json$'
+      '~\\.sbom\\.json$',
+      '--to',
+      '/usr/local/bin',
+      '--verify'
     ])
   })
 
@@ -53,7 +56,10 @@ describe('buildXgetArgs', () => {
       '--ignore',
       '~\\.sbom\\.json$',
       '--ignore',
-      '~\\.sig$'
+      '~\\.sig$',
+      '--to',
+      '/usr/local/bin',
+      '--verify'
     ])
   })
 
@@ -66,6 +72,6 @@ describe('buildXgetArgs', () => {
         assetFilters: [],
         ignore: []
       })
-    ).toEqual(['fake/package'])
+    ).toEqual(['fake/package', '--to', '/usr/local/bin', '--verify'])
   })
 })

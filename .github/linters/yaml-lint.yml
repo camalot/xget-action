@@ -3,13 +3,13 @@ extends: default
 
 ignore:
   # ignore helm templates
-  - "**/chart/templates/**/*.yaml"
-  - "**/.github/**"
+  - '**/chart/templates/**/*.yaml'
+  - '**/.github/**'
 
 yaml-files:
-  - "*.yaml"
-  - "*.yml"
-  - ".yaml-lint.yml"
+  - '*.yaml'
+  - '*.yml'
+  - '.yaml-lint.yml'
 
 # https://github.com/super-linter/super-linter/blob/main/TEMPLATES/.yaml-lint.yml
 ###########################################
