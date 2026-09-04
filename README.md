@@ -12,8 +12,9 @@ binary from a GitHub release.
    downloads the matching binary for the runner's OS/architecture.
 2. Caches the downloaded `xget` binary using `actions/cache`, so subsequent
    runs (and jobs) restore it instead of re-downloading.
-3. Adds `xget` to `PATH` and runs it with the given `package` and options to
-   install the target binary to `/usr/local/bin`.
+3. If a `package` input is given, runs `xget` with it and the other options to
+   install the target binary to `/usr/local/bin`. If `package` is omitted,
+   `xget` is installed and left on `PATH` without being run.
 
 ## Usage
 
@@ -22,6 +23,23 @@ binary from a GitHub release.
   uses: camalot/xget-action@v1
   with:
     package: junegunn/fzf
+```
+
+### Setup only (no package)
+
+Omit `package` to only install `xget` and add it to `PATH`. This is useful
+when you want to run `xget` yourself in later steps, e.g. to install multiple
+packages:
+
+```yaml
+- name: Setup xget
+  uses: camalot/xget-action@v1
+
+- name: Install multiple tools
+  shell: bash
+  run: |
+    xget some-org/some-app --asset '~\.tar\.gz$'
+    xget some-org2/another-app --asset '~\.tar\.gz$'
 ```
 
 ### Pin a specific xget version
@@ -118,21 +136,21 @@ repositories). Supply a different token if needed:
 
 ## Inputs
 
-| Name            | Required | Default            | Description                                                                                                    |
-| --------------- | -------- | ------------------- | ---------------------------------------------------------------------------------------------------------------- |
-| `xget-version`  | no       | `latest`             | Version of `xget` to install, e.g. `v2.0.0`.                                                                       |
-| `token`         | no       | `${{ github.token }}` | GitHub token used for authentication when resolving/downloading releases.                                          |
-| `package`       | yes      |                      | Package to install with `xget`, e.g. `owner/repo`.                                                                 |
-| `tag`           | no       | `` (latest)          | Tagged release of the package to install.                                                                          |
-| `prerelease`    | no       | `false`              | Whether to include prerelease versions of the package.                                                             |
-| `asset-filters` | no       | `` (none)            | Filters to apply to package assets; one matcher per line, may be specified multiple times.                         |
-| `ignore`        | no       | `` (none)            | Patterns of assets to ignore; one matcher per line, may be specified multiple times.                               |
-| `skip-verify`   | no       | `false`              | Whether to skip verification of the downloaded package. Verification is performed by default.                      |
+| Name | Required | Default | Description |
+| --- | --- | --- | --- |
+| `xget-version` | no | `latest` | Version of `xget` to install, e.g. `v2.0.0`. |
+| `token` | no | `${{ github.token }}` | GitHub token used for authentication when resolving/downloading releases. |
+| `package` | no | `` (none) | Package to install with `xget`, e.g. `owner/repo`. If omitted, only setup (install + `PATH`) is performed. |
+| `tag` | no | `` (latest) | Tagged release of the package to install. |
+| `prerelease` | no | `false` | Whether to include prerelease versions of the package. |
+| `asset-filters` | no | `` (none) | Filters to apply to package assets; one matcher per line, may be specified multiple times. |
+| `ignore` | no | `` (none) | Patterns of assets to ignore; one matcher per line, may be specified multiple times. |
+| `skip-verify` | no | `false` | Whether to skip verification of the downloaded package. Verification is performed by default. |
 
 ## Outputs
 
-| Name           | Description                            |
-| -------------- | --------------------------------------- |
+| Name | Description |
+| --- | --- |
 | `xget-version` | The version of `xget` that was installed. |
 
 ## License

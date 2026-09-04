@@ -17,8 +17,9 @@ inputs:
     default: '${{ github.token }}'
 
   package:
-    description: 'Package to install with xget, e.g. owner/repo'
-    required: true
+    description: 'Package to install with xget, e.g. owner/repo. If omitted, xget is installed and added to PATH but not run.'
+    required: false
+    default: ''
 
   tag:
     description: 'Tagged release of the package to install (default: latest)'

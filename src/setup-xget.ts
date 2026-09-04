@@ -83,6 +83,11 @@ async function run(): Promise<void> {
     core.setOutput('xget-version', version)
     core.info(`Using xget ${version}`)
 
+    if (!inputs.package) {
+      core.info('No package input provided; xget was installed but will not be run.')
+      return
+    }
+
     const args = buildXgetArgs(inputs)
     const env: { [key: string]: string } = {}
     for (const [key, value] of Object.entries(process.env)) {

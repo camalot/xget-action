@@ -96266,7 +96266,7 @@ function getInputs() {
     return {
         xgetVersion: getInput('xget-version') || 'latest',
         token: getInput('token'),
-        package: getInput('package', { required: true }),
+        package: getInput('package'),
         tag: getInput('tag'),
         prerelease: getBooleanInput('prerelease'),
         assetFilters: getMultilineInput('asset-filters'),
@@ -96490,6 +96490,10 @@ async function run() {
         addPath(toolPath);
         setOutput('xget-version', version);
         info(`Using xget ${version}`);
+        if (!inputs.package) {
+            info('No package input provided; xget was installed but will not be run.');
+            return;
+        }
         const args = buildXgetArgs(inputs);
         const env = {};
         for (const [key, value] of Object.entries(process.env)) {
