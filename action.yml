@@ -36,6 +36,16 @@ inputs:
     required: false
     default: ''
 
+  file-filter:
+    description: 'Filters to apply to the files of the package; one per line, may be specified multiple times'
+    required: false
+    default: ''
+
+  all-files:
+    description: 'Whether to include all files of the package'
+    required: false
+    default: 'false'
+
   ignore:
     description: 'Patterns of assets to ignore; one per line, may be specified multiple times'
     required: false
