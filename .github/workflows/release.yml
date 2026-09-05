@@ -1,9 +1,6 @@
 ---
 name: 'Publish Release'
 on: # yamllint disable-line rule:truthy
-  push:
-    branches:
-      - xxxxxxxxxxxxx # prevent any release until ready
   workflow_dispatch: {}
 permissions: {}
 jobs:
