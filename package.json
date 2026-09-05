@@ -12,8 +12,8 @@
     "build": "ncc build -o dist/setup src/setup-xget.ts && ncc build -o dist/cache-save src/cache-save.ts",
     "format": "prettier --no-error-on-unmatched-pattern --write \"**/*.{ts,yml,yaml}\"",
     "format-check": "prettier --no-error-on-unmatched-pattern --check \"**/*.{ts,yml,yaml}\"",
-    "lint": "eslint \"**/*.ts\"",
-    "lint:fix": "eslint \"**/*.ts\" --fix",
+    "lint": "eslint \"**/*.ts\" --config .github/linters/eslint.config.js",
+    "lint:fix": "eslint \"**/*.ts\" --fix --config .github/linters/eslint.config.js",
     "test": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js --runInBand --coverage",
     "pre-checkin": "npm run format && npm run lint:fix && npm run build && npm test"
   },
@@ -47,7 +47,7 @@
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@jest/globals": "^30.4.1",
-    "@types/node": "^24.1.0",
+    "@types/node": "^26.4.0",
     "@types/semver": "^7.7.0",
     "@typescript-eslint/eslint-plugin": "^8.62.0",
     "@typescript-eslint/parser": "^8.62.0",

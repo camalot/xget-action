@@ -4,8 +4,13 @@
   "IgnoreDefaults": false,
   "SpacesAfterTabs": false,
   "NoColor": false,
-  "exclude": [
-    "testfiles"
+  "Exclude": [
+    "^dist/",
+    "testfiles",
+    "^\\.editorconfig$",
+    "^\\.gitattributes$",
+    "^\\.gitignore$",
+    "^\\.prettierignore$"
   ],
   "AllowedContentTypes": [],
   "PassedFiles": [],

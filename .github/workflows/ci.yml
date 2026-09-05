@@ -1,0 +1,77 @@
+---
+name: 'ci'
+on: # yamllint disable-line rule:truthy
+  push:
+  pull_request:
+permissions: {}
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      statuses: write
+      issues: read
+      checks: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Lint Codebase
+        uses: camalot/actions/smells/lint@v1
+        with:
+          # Cannot use the default GITHUB_TOKEN as it cannot read from other repositories
+          token: ${{ github.token }}
+          default_branch: main
+          super_linter_env_file: .github/linters/super-linter.env
+
+  test:
+    runs-on: ubuntu-latest
+    needs:
+      - lint
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+
+      - run: npm ci
+      - run: npm test
+
+  build:
+    runs-on: ubuntu-latest
+    needs:
+      - test
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+
+      - run: npm ci
+      - run: npm run build
+
+      # dist/ is the distributed artifact for this action; fail if a
+      # contributor forgot to commit the rebuilt output.
+      - name: Verify dist/ is up to date
+        run: |
+          if [ -n "$(git status --porcelain dist/)" ]; then
+            echo "::error::dist/ is out of date. Run 'npm run build' and commit the result."
+            git status --porcelain dist/
+            git diff -- dist/
+            exit 1
+          fi

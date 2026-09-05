@@ -15,7 +15,7 @@ export function getInputs(): ActionInputs {
   return {
     xgetVersion: core.getInput('xget-version') || 'latest',
     token: core.getInput('token'),
-    package: core.getInput('package', { required: true }),
+    package: core.getInput('package'),
     tag: core.getInput('tag'),
     prerelease: core.getBooleanInput('prerelease'),
     assetFilters: core.getMultilineInput('asset-filters'),

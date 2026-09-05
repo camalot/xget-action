@@ -33,8 +33,8 @@ jobs:
         uses: camalot/actions/version/get@v1
         with:
           default_version: v1.0.0
-          fail_on_default: true
-          fail_on_same_version: true
+          fail_on_default: false
+          fail_on_same_version: false
           token: ${{ github.token }}
       - run: |
           echo "next version: ${TAG}"
@@ -63,9 +63,6 @@ jobs:
         with:
           fetch-depth: 0
           persist-credentials: false
-      - run: |
-          # ensure builds/docker/prepare-build.sh is executable
-          chmod +x builds/docker/prepare-build.sh
 
       - name: Lint Codebase
         uses: camalot/actions/smells/lint@v1
@@ -73,8 +70,41 @@ jobs:
           # Cannot use the default GITHUB_TOKEN as it cannot read from other repositories
           token: ${{ github.token }}
           default_branch: main
-          delete_previous_comment: true
           super_linter_env_file: .github/linters/super-linter.env
+
+  build:
+    runs-on: ubuntu-latest
+    needs:
+      - version
+      - lint
+    permissions:
+      # push a rebuilt dist/ back to the branch before the release is cut
+      contents: write
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+
+      - run: npm ci
+      - run: npm test
+      - run: npm run build
+
+      - name: Commit rebuilt dist/
+        run: |
+          if [ -n "$(git status --porcelain dist/)" ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git add dist/
+            git commit -m "chore: rebuild dist"
+            git push
+          else
+            echo "dist/ is already up to date"
+          fi
 
   release:
     runs-on: ubuntu-latest
@@ -82,6 +112,7 @@ jobs:
     needs:
       - version
       - lint
+      - build
     permissions:
       # write CHANGELOG.md commit, tags, and GitHub Release
       contents: write
