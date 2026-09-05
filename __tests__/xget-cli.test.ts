@@ -12,7 +12,7 @@ describe('buildXgetArgs', () => {
         ignore: [],
         skipVerify: false
       })
-    ).toEqual(['fake/package', '--to', '/usr/local/bin', '--verify'])
+    ).toEqual(['fake/package', '--to', '/usr/local/bin', '--non-interactive', '--verify'])
   })
 
   it('includes tag, prerelease, asset filters, and ignore', () => {
@@ -36,6 +36,7 @@ describe('buildXgetArgs', () => {
       '~\\.sbom\\.json$',
       '--to',
       '/usr/local/bin',
+      '--non-interactive',
       '--verify'
     ])
   })
@@ -62,6 +63,7 @@ describe('buildXgetArgs', () => {
       '~\\.sig$',
       '--to',
       '/usr/local/bin',
+      '--non-interactive',
       '--verify'
     ])
   })
@@ -76,7 +78,7 @@ describe('buildXgetArgs', () => {
         ignore: [],
         skipVerify: false
       })
-    ).toEqual(['fake/package', '--to', '/usr/local/bin', '--verify'])
+    ).toEqual(['fake/package', '--to', '/usr/local/bin', '--non-interactive', '--verify'])
   })
 
   it('omits --verify when skipVerify is true', () => {
@@ -89,6 +91,6 @@ describe('buildXgetArgs', () => {
         ignore: [],
         skipVerify: true
       })
-    ).toEqual(['fake/package', '--to', '/usr/local/bin'])
+    ).toEqual(['fake/package', '--to', '/usr/local/bin', '--non-interactive'])
   })
 })
