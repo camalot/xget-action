@@ -25,6 +25,7 @@ export function buildXgetArgs(inputs: XgetCliInputs): string[] {
   }
 
   args.push('--to', '/usr/local/bin')
+  args.push('--non-interactive')
   if (!inputs.skipVerify) {
     args.push('--verify')
   }
