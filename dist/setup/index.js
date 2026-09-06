@@ -96271,7 +96271,9 @@ function getInputs() {
         prerelease: getBooleanInput('prerelease'),
         assetFilters: getMultilineInput('asset-filters'),
         ignore: getMultilineInput('ignore'),
-        skipVerify: getBooleanInput('skip-verify')
+        skipVerify: getBooleanInput('skip-verify'),
+        fileFilter: getInput('file-filter'),
+        allFiles: getBooleanInput('all-files')
     };
 }
 
@@ -96422,6 +96424,12 @@ function buildXgetArgs(inputs) {
     }
     args.push('--to', '/usr/local/bin');
     args.push('--non-interactive');
+    if (inputs.fileFilter) {
+        args.push('--file', inputs.fileFilter);
+    }
+    if (inputs.allFiles) {
+        args.push('--all');
+    }
     if (!inputs.skipVerify) {
         args.push('--verify');
     }
