@@ -9,12 +9,12 @@ binary from a GitHub release.
 ## What it does
 
 1. Resolves the requested `xget` version (or the latest release) and
-   downloads the matching binary for the runner's OS/architecture.
+  downloads the matching binary for the runner's OS/architecture.
 2. Caches the downloaded `xget` binary using `actions/cache`, so subsequent
-   runs (and jobs) restore it instead of re-downloading.
+  runs (and jobs) restore it instead of re-downloading.
 3. If a `package` input is given, runs `xget` with it and the other options to
-   install the target binary to `/usr/local/bin`. If `package` is omitted,
-   `xget` is installed and left on `PATH` without being run.
+  install the target binary to `/usr/local/bin`. If `package` is omitted,
+  `xget` is installed and left on `PATH` without being run.
 
 ## Usage
 

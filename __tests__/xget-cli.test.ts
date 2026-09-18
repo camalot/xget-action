@@ -11,6 +11,8 @@ describe('buildXgetArgs', () => {
         assetFilters: [],
         ignore: [],
         skipVerify: false,
+        fileFilter: '',
+        allFiles: false,
         to: '',
         args: []
       })
@@ -32,6 +34,8 @@ describe('buildXgetArgs', () => {
         assetFilters: ['~\\.tar\\.gz'],
         ignore: ['~\\.sbom\\.json$'],
         skipVerify: false,
+        fileFilter: '',
+        allFiles: false,
         to: '',
         args: []
       })
@@ -60,6 +64,8 @@ describe('buildXgetArgs', () => {
         assetFilters: ['~\\.tar\\.gz', '~\\.zip$'],
         ignore: ['~\\.sbom\\.json$', '~\\.sig$'],
         skipVerify: false,
+        fileFilter: '',
+        allFiles: false,
         to: '',
         args: []
       })
@@ -89,6 +95,8 @@ describe('buildXgetArgs', () => {
         assetFilters: [],
         ignore: [],
         skipVerify: false,
+        fileFilter: '',
+        allFiles: false,
         to: '',
         args: []
       })
@@ -110,6 +118,8 @@ describe('buildXgetArgs', () => {
         assetFilters: [],
         ignore: [],
         skipVerify: true,
+        fileFilter: '',
+        allFiles: false,
         to: '',
         args: []
       })
@@ -125,9 +135,58 @@ describe('buildXgetArgs', () => {
         assetFilters: ['~\\.tar\\.gz'],
         ignore: ['~\\.sbom\\.json$'],
         skipVerify: false,
+        fileFilter: 'automatic-file-filter',
+        allFiles: true,
         to: '/custom/bin',
         args: ['--tag', 'v9.9.9', '--to', '/explicit/bin']
       })
     ).toEqual(['fake/package', '--tag', 'v9.9.9', '--to', '/explicit/bin'])
+  })
+
+  it('includes --file when specified', () => {
+    expect(
+      buildXgetArgs({
+        package: 'fake/package',
+        tag: '',
+        prerelease: false,
+        assetFilters: [],
+        ignore: [],
+        skipVerify: false,
+        fileFilter: 'some-file.txt',
+        allFiles: false,
+        args: []
+      })
+    ).toEqual([
+      'fake/package',
+      '--to',
+      '/usr/local/bin',
+      '--non-interactive',
+      '--file',
+      'some-file.txt',
+      '--verify'
+    ])
+  })
+  
+  it('includes --all when allFiles is true', () => {
+    expect(
+      buildXgetArgs({
+        package: 'fake/package',
+        tag: '',
+        prerelease: false,
+        assetFilters: [],
+        ignore: [],
+        skipVerify: false,
+        fileFilter: '',
+        allFiles: true,
+        args: []
+      })
+    ).toEqual([
+      'fake/package',
+      '--to',
+      '/usr/local/bin',
+      '--non-interactive',
+      '--all',
+      '--verify'
+    ])
   })
 })
