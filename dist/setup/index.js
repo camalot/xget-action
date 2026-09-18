@@ -96271,7 +96271,8 @@ function getInputs() {
         prerelease: getBooleanInput('prerelease'),
         assetFilters: getMultilineInput('asset-filters'),
         ignore: getMultilineInput('ignore'),
-        skipVerify: getBooleanInput('skip-verify')
+        skipVerify: getBooleanInput('skip-verify'),
+        args: getMultilineInput('args')
     };
 }
 
@@ -96408,6 +96409,11 @@ async function resolveXgetVersion(requested, token) {
 /** Builds the argument list for `xget <target> [flags]` from the action inputs. */
 function buildXgetArgs(inputs) {
     const args = [inputs.package];
+    // if args is used, no other flags are added automatically
+    if (inputs.args.length > 0) {
+        args.push(...inputs.args);
+        return args;
+    }
     if (inputs.tag && inputs.tag !== 'latest') {
         args.push('--tag', inputs.tag);
     }
@@ -96420,7 +96426,14 @@ function buildXgetArgs(inputs) {
     for (const pattern of inputs.ignore) {
         args.push('--ignore', pattern);
     }
-    args.push('--to', '/usr/local/bin');
+    // if inputs.to is set, use that, otherwise, use /usr/local/bin
+    if (inputs.to) {
+        args.push('--to', inputs.to);
+    }
+    else {
+        args.push('--to', '/usr/local/bin');
+    }
+    args.push('--non-interactive');
     if (!inputs.skipVerify) {
         args.push('--verify');
     }

@@ -5,11 +5,19 @@ export interface XgetCliInputs {
   assetFilters: string[]
   ignore: string[]
   skipVerify: boolean
+  to?: string
+  args: string[]
 }
 
 /** Builds the argument list for `xget <target> [flags]` from the action inputs. */
 export function buildXgetArgs(inputs: XgetCliInputs): string[] {
   const args: string[] = [inputs.package]
+
+  // if args is used, no other flags are added automatically
+  if (inputs.args.length > 0) {
+    args.push(...inputs.args)
+    return args
+  }
 
   if (inputs.tag && inputs.tag !== 'latest') {
     args.push('--tag', inputs.tag)
@@ -23,8 +31,12 @@ export function buildXgetArgs(inputs: XgetCliInputs): string[] {
   for (const pattern of inputs.ignore) {
     args.push('--ignore', pattern)
   }
-
-  args.push('--to', '/usr/local/bin')
+  // if inputs.to is set, use that, otherwise, use /usr/local/bin
+  if (inputs.to) {
+    args.push('--to', inputs.to)
+  } else {
+    args.push('--to', '/usr/local/bin')
+  }
   args.push('--non-interactive')
   if (!inputs.skipVerify) {
     args.push('--verify')

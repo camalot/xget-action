@@ -9,6 +9,7 @@ export interface ActionInputs {
   assetFilters: string[]
   ignore: string[]
   skipVerify: boolean
+  args: string[]
 }
 
 export function getInputs(): ActionInputs {
@@ -20,6 +21,7 @@ export function getInputs(): ActionInputs {
     prerelease: core.getBooleanInput('prerelease'),
     assetFilters: core.getMultilineInput('asset-filters'),
     ignore: core.getMultilineInput('ignore'),
-    skipVerify: core.getBooleanInput('skip-verify')
+    skipVerify: core.getBooleanInput('skip-verify'),
+    args: core.getMultilineInput('args')
   }
 }

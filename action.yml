@@ -46,6 +46,11 @@ inputs:
     required: false
     default: 'false'
 
+  args:
+    description: 'Additional arguments to pass to the xget command. If specified, no other flags are added automatically.'
+    required: false
+    default: ''
+
 outputs:
   xget-version:
     description: 'The version of xget that was installed'
