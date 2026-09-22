@@ -12,6 +12,7 @@ export interface ActionInputs {
   args: string[]
   fileFilter: string
   allFiles: boolean
+  provider: string
 }
 
 export function getInputs(): ActionInputs {
@@ -26,6 +27,7 @@ export function getInputs(): ActionInputs {
     skipVerify: core.getBooleanInput('skip-verify'),
     args: core.getMultilineInput('args'),
     fileFilter: core.getInput('file-filter'),
-    allFiles: core.getBooleanInput('all-files')
+    allFiles: core.getBooleanInput('all-files'),
+    provider: core.getInput('provider')
   }
 }

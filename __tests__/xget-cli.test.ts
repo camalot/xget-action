@@ -13,6 +13,7 @@ describe('buildXgetArgs', () => {
         skipVerify: false,
         fileFilter: '',
         allFiles: false,
+        provider: '',
         to: '',
         args: []
       })
@@ -20,8 +21,9 @@ describe('buildXgetArgs', () => {
       'fake/package',
       '--to',
       '/usr/local/bin',
+      '--verify',
       '--non-interactive',
-      '--verify'
+      '--untracked',
     ])
   })
 
@@ -37,6 +39,7 @@ describe('buildXgetArgs', () => {
         fileFilter: '',
         allFiles: false,
         to: '',
+        provider: '',
         args: []
       })
     ).toEqual([
@@ -50,8 +53,9 @@ describe('buildXgetArgs', () => {
       '~\\.sbom\\.json$',
       '--to',
       '/usr/local/bin',
+      '--verify',
       '--non-interactive',
-      '--verify'
+      '--untracked',
     ])
   })
 
@@ -67,6 +71,7 @@ describe('buildXgetArgs', () => {
         fileFilter: '',
         allFiles: false,
         to: '',
+        provider: '',
         args: []
       })
     ).toEqual([
@@ -81,8 +86,9 @@ describe('buildXgetArgs', () => {
       '~\\.sig$',
       '--to',
       '/usr/local/bin',
+      '--verify',
       '--non-interactive',
-      '--verify'
+      '--untracked',
     ])
   })
 
@@ -98,14 +104,16 @@ describe('buildXgetArgs', () => {
         fileFilter: '',
         allFiles: false,
         to: '',
+        provider: '',
         args: []
       })
     ).toEqual([
       'fake/package',
       '--to',
       '/usr/local/bin',
+      '--verify',
       '--non-interactive',
-      '--verify'
+      '--untracked',
     ])
   })
 
@@ -121,9 +129,10 @@ describe('buildXgetArgs', () => {
         fileFilter: '',
         allFiles: false,
         to: '',
+        provider: '',
         args: []
       })
-    ).toEqual(['fake/package', '--to', '/usr/local/bin', '--non-interactive'])
+    ).toEqual(['fake/package', '--to', '/usr/local/bin', '--non-interactive', '--untracked'])
   })
 
   it('uses explicit args without adding automatic input flags', () => {
@@ -138,6 +147,7 @@ describe('buildXgetArgs', () => {
         fileFilter: 'automatic-file-filter',
         allFiles: true,
         to: '/custom/bin',
+        provider: '',
         args: ['--tag', 'v9.9.9', '--to', '/explicit/bin']
       })
     ).toEqual(['fake/package', '--tag', 'v9.9.9', '--to', '/explicit/bin'])
@@ -154,16 +164,18 @@ describe('buildXgetArgs', () => {
         skipVerify: false,
         fileFilter: 'some-file.txt',
         allFiles: false,
+        provider: '',
         args: []
       })
     ).toEqual([
       'fake/package',
       '--to',
       '/usr/local/bin',
-      '--non-interactive',
       '--file',
       'some-file.txt',
-      '--verify'
+      '--verify',
+      '--non-interactive',
+      '--untracked',
     ])
   })
   
@@ -178,15 +190,43 @@ describe('buildXgetArgs', () => {
         skipVerify: false,
         fileFilter: '',
         allFiles: true,
+        provider: '',
         args: []
       })
     ).toEqual([
       'fake/package',
       '--to',
       '/usr/local/bin',
-      '--non-interactive',
       '--all',
-      '--verify'
+      '--verify',
+      '--non-interactive',
+      '--untracked',
+    ])
+  })
+
+  it('includes --provider when specified', () => {
+    expect(
+      buildXgetArgs({
+        package: 'fake/package',
+        tag: '',
+        prerelease: false,
+        assetFilters: [],
+        ignore: [],
+        skipVerify: false,
+        fileFilter: '',
+        allFiles: false,
+        provider: 'custom-provider',
+        args: []
+      })
+    ).toEqual([
+      'fake/package',
+      '--to',
+      '/usr/local/bin',
+      '--provider',
+      'custom-provider',
+      '--verify',
+      '--non-interactive',
+      '--untracked',
     ])
   })
 })

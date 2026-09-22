@@ -9,6 +9,7 @@ export interface XgetCliInputs {
   args: string[]
   fileFilter: string
   allFiles: boolean
+  provider: string
 }
 
 /** Builds the argument list for `xget <target> [flags]` from the action inputs. */
@@ -39,17 +40,23 @@ export function buildXgetArgs(inputs: XgetCliInputs): string[] {
   } else {
     args.push('--to', '/usr/local/bin')
   }
-  args.push('--non-interactive')
+
   if (inputs.fileFilter) {
     args.push('--file', inputs.fileFilter)
   }
   if (inputs.allFiles) {
     args.push('--all')
   }
+  if (inputs.provider) {
+    args.push('--provider', inputs.provider)
+  }
 
   if (!inputs.skipVerify) {
     args.push('--verify')
   }
+
+  args.push('--non-interactive')
+  args.push('--untracked')
 
   return args
 }

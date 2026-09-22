@@ -56,6 +56,11 @@ inputs:
     required: false
     default: 'false'
 
+  provider:
+    description: 'Provider to use with the xget command. The default is GitHub as the provider if not specified'
+    required: false
+    default: ''
+
   args:
     description: 'Additional arguments to pass to the xget command. If specified, no other flags are added automatically.'
     required: false
