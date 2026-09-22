@@ -1,15 +1,16 @@
 export interface XgetCliInputs {
   package: string
-  tag: string
+  tag?: string
   prerelease: boolean
-  assetFilters: string[]
-  ignore: string[]
+  assetFilters?: string[]
+  ignore?: string[]
   skipVerify: boolean
   to?: string
-  args: string[]
-  fileFilter: string
+  args?: string[]
+  fileFilter?: string
   allFiles: boolean
-  provider: string
+  provider?: string
+  configFile?: string
 }
 
 /** Builds the argument list for `xget <target> [flags]` from the action inputs. */
@@ -17,7 +18,7 @@ export function buildXgetArgs(inputs: XgetCliInputs): string[] {
   const args: string[] = [inputs.package]
 
   // if args is used, no other flags are added automatically
-  if (inputs.args.length > 0) {
+  if (inputs.args && inputs.args.length > 0) {
     args.push(...inputs.args)
     return args
   }
@@ -28,10 +29,10 @@ export function buildXgetArgs(inputs: XgetCliInputs): string[] {
   if (inputs.prerelease) {
     args.push('--pre-release')
   }
-  for (const filter of inputs.assetFilters) {
+  for (const filter of inputs.assetFilters ?? []) {
     args.push('--asset', filter)
   }
-  for (const pattern of inputs.ignore) {
+  for (const pattern of inputs.ignore ?? []) {
     args.push('--ignore', pattern)
   }
   // if inputs.to is set, use that, otherwise, use /usr/local/bin
@@ -57,6 +58,10 @@ export function buildXgetArgs(inputs: XgetCliInputs): string[] {
 
   args.push('--non-interactive')
   args.push('--untracked')
+
+  if (inputs.configFile) {
+    args.push('--config', inputs.configFile)
+  }
 
   return args
 }

@@ -6,16 +6,10 @@ describe('buildXgetArgs', () => {
     expect(
       buildXgetArgs({
         package: 'fake/package',
-        tag: '',
         prerelease: false,
-        assetFilters: [],
-        ignore: [],
         skipVerify: false,
         fileFilter: '',
-        allFiles: false,
-        provider: '',
-        to: '',
-        args: []
+        allFiles: false
       })
     ).toEqual([
       'fake/package',
@@ -36,11 +30,7 @@ describe('buildXgetArgs', () => {
         assetFilters: ['~\\.tar\\.gz'],
         ignore: ['~\\.sbom\\.json$'],
         skipVerify: false,
-        fileFilter: '',
         allFiles: false,
-        to: '',
-        provider: '',
-        args: []
       })
     ).toEqual([
       'fake/package',
@@ -63,16 +53,12 @@ describe('buildXgetArgs', () => {
     expect(
       buildXgetArgs({
         package: 'fake/package',
-        tag: '',
         prerelease: false,
         assetFilters: ['~\\.tar\\.gz', '~\\.zip$'],
         ignore: ['~\\.sbom\\.json$', '~\\.sig$'],
         skipVerify: false,
         fileFilter: '',
         allFiles: false,
-        to: '',
-        provider: '',
-        args: []
       })
     ).toEqual([
       'fake/package',
@@ -92,20 +78,33 @@ describe('buildXgetArgs', () => {
     ])
   })
 
+  it('uses the custom --to value when provided', () => {
+    expect(
+      buildXgetArgs({
+        package: 'fake/package',
+        prerelease: false,
+        skipVerify: false,
+        allFiles: false,
+        to: '/custom/bin',
+      })
+    ).toEqual([
+      'fake/package',
+      '--to',
+      '/custom/bin',
+      '--verify',
+      '--non-interactive',
+      '--untracked',
+    ])
+  })
+
   it('omits --tag when tag is "latest"', () => {
     expect(
       buildXgetArgs({
         package: 'fake/package',
         tag: 'latest',
         prerelease: false,
-        assetFilters: [],
-        ignore: [],
         skipVerify: false,
-        fileFilter: '',
         allFiles: false,
-        to: '',
-        provider: '',
-        args: []
       })
     ).toEqual([
       'fake/package',
@@ -121,16 +120,9 @@ describe('buildXgetArgs', () => {
     expect(
       buildXgetArgs({
         package: 'fake/package',
-        tag: '',
         prerelease: false,
-        assetFilters: [],
-        ignore: [],
         skipVerify: true,
-        fileFilter: '',
         allFiles: false,
-        to: '',
-        provider: '',
-        args: []
       })
     ).toEqual(['fake/package', '--to', '/usr/local/bin', '--non-interactive', '--untracked'])
   })
@@ -147,7 +139,6 @@ describe('buildXgetArgs', () => {
         fileFilter: 'automatic-file-filter',
         allFiles: true,
         to: '/custom/bin',
-        provider: '',
         args: ['--tag', 'v9.9.9', '--to', '/explicit/bin']
       })
     ).toEqual(['fake/package', '--tag', 'v9.9.9', '--to', '/explicit/bin'])
@@ -157,15 +148,10 @@ describe('buildXgetArgs', () => {
     expect(
       buildXgetArgs({
         package: 'fake/package',
-        tag: '',
         prerelease: false,
-        assetFilters: [],
-        ignore: [],
         skipVerify: false,
         fileFilter: 'some-file.txt',
         allFiles: false,
-        provider: '',
-        args: []
       })
     ).toEqual([
       'fake/package',
@@ -183,15 +169,9 @@ describe('buildXgetArgs', () => {
     expect(
       buildXgetArgs({
         package: 'fake/package',
-        tag: '',
         prerelease: false,
-        assetFilters: [],
-        ignore: [],
         skipVerify: false,
-        fileFilter: '',
         allFiles: true,
-        provider: '',
-        args: []
       })
     ).toEqual([
       'fake/package',
@@ -208,12 +188,8 @@ describe('buildXgetArgs', () => {
     expect(
       buildXgetArgs({
         package: 'fake/package',
-        tag: '',
         prerelease: false,
-        assetFilters: [],
-        ignore: [],
         skipVerify: false,
-        fileFilter: '',
         allFiles: false,
         provider: 'custom-provider',
         args: []
@@ -227,6 +203,26 @@ describe('buildXgetArgs', () => {
       '--verify',
       '--non-interactive',
       '--untracked',
+    ])
+  })
+  it('includes --config when configFile is specified', () => {
+    expect(
+      buildXgetArgs({
+        package: 'fake/package',
+        prerelease: false,
+        skipVerify: false,
+        allFiles: false,
+        configFile: '/path/to/config.yml',
+      })
+    ).toEqual([
+      'fake/package',
+      '--to',
+      '/usr/local/bin',
+      '--verify',
+      '--non-interactive',
+      '--untracked',
+      '--config',
+      '/path/to/config.yml',
     ])
   })
 })
