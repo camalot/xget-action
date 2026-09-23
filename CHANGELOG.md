@@ -1,4 +1,67 @@
 
+## [v1.3.0](https://github.com/camalot/xget-action/releases/tag/vv1.3.0) - 2026-09-23
+
+### 🚀 FEATURES
+
+#### _GENERAL_
+
+- Added provider input to add support for other providers -[@camalot](https://github.com/camalot)
+
+
+### 🐛 BUG FIXES
+
+#### _GENERAL_
+
+- Update tests for better coverage -[@camalot](https://github.com/camalot)
+
+- Update to output the test coverage report -[@camalot](https://github.com/camalot)
+
+
+### 💼 OTHER
+
+#### _GENERAL_
+
+- Merge branch 'main' of github.com:camalot/xget-action -[@camalot](https://github.com/camalot)
+
+- Main' of github.com:camalot/xget-action: -[@camalot](https://github.com/camalot)
+
+
+### ⚙️ MISCELLANEOUS TASKS
+
+
+#### _PACKAGE_
+- Added SBOM/provenance to action release -[@camalot](https://github.com/camalot)
+
+#### _GENERAL_
+
+- chore(release): update changelog for v1.2.0 -[@camalot](https://github.com/camalot)
+
+
+## GitHub
+
+### 💛 Contributors
+
+
+- [@camalot](https://github.com/camalot)
+## 📈 Commit Statistics
+
+
+- `7` commits contributed to the release.
+- `1` day has passed between the first and last commit.
+- `4` commits parsed as conventional.
+- `0` linked issues detected in commits.
+- `3` days  have passed between releases.
+
+
+![Statistics](https://quickchart.io/chart?c={type:'bar',data:{labels:['Commits','Contributors','Days%20Between%20Commits','Conventional%20Commits','Referenced%20Links','Days%20Since%20Last%20Release'],datasets:[{label:'Release',data:[7,1,1,4,0,3]}]}})
+
+
+
+---
+
+
+**Full Changelog**: https://github.com/camalot/xget-action/compare/v1.2.0...v1.3.0
+
 ## [v1.2.0](https://github.com/camalot/xget-action/releases/tag/vv1.2.0) - 2026-09-20
 
 ### 🚀 FEATURES
