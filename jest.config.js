@@ -10,5 +10,7 @@ export default {
     '^.+\\.ts$': ['ts-jest', {useESM: true, tsconfig: 'tsconfig.test.json'}]
   },
   testMatch: ['**/__tests__/**/*.test.ts'],
-  clearMocks: true
+  clearMocks: true,
+  coverageDirectory: 'reports/coverage',
+  coverageReporters: ['lcov', 'text']
 }
