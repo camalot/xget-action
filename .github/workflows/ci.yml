@@ -46,6 +46,13 @@ jobs:
       - run: npm ci
       - run: npm test
 
+      - uses: camalot/actions/smells/test/coverage@v1
+
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+
   build:
     runs-on: ubuntu-latest
     needs:

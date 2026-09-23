@@ -133,3 +133,54 @@ jobs:
           tag_major_minor: ${{ needs.version.outputs.tag_major_minor }}
           tag_major_minor_patch: ${{ needs.version.outputs.tag_major_minor_patch }}
           token: ${{ github.token }}
+
+  provenance:
+    runs-on: ubuntu-latest
+    if: success()
+    needs:
+      - version
+      - build
+      - release
+    permissions:
+      # attach the tarball/SBOM to the release
+      contents: write
+      # sign and publish the build provenance and SBOM attestations
+      id-token: write
+      attestations: write
+    steps:
+      # check out the tag rather than the branch tip so dist/ matches
+      # exactly what the release job just tagged
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ needs.version.outputs.tag_major_minor_patch }}
+          persist-credentials: false
+
+      - name: Package dist/ as a tarball
+        run: tar -czf xget-action-dist.tar.gz dist/
+
+      - name: Generate SPDX SBOM
+        uses: anchore/sbom-action@v0
+        with:
+          path: dist
+          format: spdx-json
+          output-file: xget-action-dist.spdx.json
+          upload-artifact: false
+          upload-release-assets: false
+
+      - name: Attest build provenance
+        uses: actions/attest@v4
+        with:
+          subject-path: xget-action-dist.tar.gz
+
+      - name: Attest SBOM
+        uses: actions/attest@v4
+        with:
+          subject-path: xget-action-dist.tar.gz
+          sbom-path: xget-action-dist.spdx.json
+
+      - name: Upload tarball and SBOM to release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ needs.version.outputs.tag_major_minor_patch }}
+        run: |
+          gh release upload "${TAG}" xget-action-dist.tar.gz xget-action-dist.spdx.json --clobber
