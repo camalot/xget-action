@@ -54,7 +54,7 @@ Update all of these together:
 
 1. `action.yml`: add the input with a description and default.
 2. `src/context.ts`: add it to `ActionInputs` and `getInputs()`. Use `getBooleanInput` or
-   `getMultilineInput` where appropriate.
+    `getMultilineInput` where appropriate.
 3. `src/xget-cli.ts`: map it to an xget flag in `buildXgetArgs()`, if it maps to one.
 4. `__tests__/`: add or adjust tests (e.g. `xget-cli.test.ts`).
 5. `README.md`: update the inputs table and examples.
