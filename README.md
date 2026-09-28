@@ -107,6 +107,58 @@ disable verification:
     skip-verify: true
 ```
 
+### Select files to extract
+
+```yaml
+- name: Extract a specific file
+  uses: camalot/xget-action@v1
+  with:
+    package: neovim/neovim
+    file-filter: 'nvim'
+
+- name: Extract all files
+  uses: camalot/xget-action@v1
+  with:
+    package: junegunn/fzf
+    all-files: true
+```
+
+### Rename the installed binary
+
+```yaml
+- name: Install and rename
+  uses: camalot/xget-action@v1
+  with:
+    package: BurntSushi/ripgrep
+    binary: rg2
+```
+
+### Use a different provider
+
+```yaml
+- name: Install from GitLab
+  uses: camalot/xget-action@v1
+  with:
+    package: gitlab-org/cli
+    provider: gitlab
+```
+
+### Pass raw arguments
+
+`args` takes one argument per line and replaces all automatically added flags,
+so include anything you still need (e.g. `--non-interactive`):
+
+```yaml
+- name: Install with custom arguments
+  uses: camalot/xget-action@v1
+  with:
+    package: junegunn/fzf
+    args: |
+      --to
+      ./bin
+      --non-interactive
+```
+
 ### Use a custom GitHub token
 
 By default the workflow's `GITHUB_TOKEN` is used to authenticate requests to
@@ -141,11 +193,19 @@ repositories). Supply a different token if needed:
 | `xget-version` | no | `latest` | Version of `xget` to install, e.g. `v2.0.0`. |
 | `token` | no | `${{ github.token }}` | GitHub token used for authentication when resolving/downloading releases. |
 | `package` | no | `` (none) | Package to install with `xget`, e.g. `owner/repo`. If omitted, only setup (install + `PATH`) is performed. |
-| `tag` | no | `` (latest) | Tagged release of the package to install. |
-| `prerelease` | no | `false` | Whether to include prerelease versions of the package. |
-| `asset-filters` | no | `` (none) | Filters to apply to package assets; one matcher per line, may be specified multiple times. |
-| `ignore` | no | `` (none) | Patterns of assets to ignore; one matcher per line, may be specified multiple times. |
-| `skip-verify` | no | `false` | Whether to skip verification of the downloaded package. Verification is performed by default. |
+| `tag` | no | `` (latest) | Tagged release of the package to install. Maps to `--tag`. |
+| `binary` | no | `` (none) | Rename a single extracted file to this name, keeping its extension. Ignored when multiple files are extracted. Maps to `--binary`. |
+| `prerelease` | no | `false` | Whether to include prerelease versions of the package. Maps to `--pre-release`. |
+| `asset-filters` | no | `` (none) | Filters to apply to package assets; one matcher per line. Each line maps to `--asset`. |
+| `file-filter` | no | `` (none) | Glob selecting which files to extract from the archive. Maps to `--file`. |
+| `all-files` | no | `false` | Extract all candidate files from the archive. Maps to `--all`. |
+| `ignore` | no | `` (none) | Patterns of assets to ignore; one matcher per line. Each line maps to `--ignore`. |
+| `skip-verify` | no | `false` | Whether to skip verification of the downloaded package. Verification (`--verify`) is performed by default. |
+| `provider` | no | `` (GitHub) | Release source profile to use: `github`, `gitlab`, or a named profile from the xget config. Maps to `--provider`. |
+| `args` | no | `` (none) | Arguments to pass to `xget` after the package, one per line. When set, **no other flags are added automatically**. |
+
+Unless `args` is set, the action always runs `xget` with `--to /usr/local/bin`,
+`--non-interactive`, and `--untracked`.
 
 ## Outputs
 
