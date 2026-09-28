@@ -11,6 +11,7 @@ export interface XgetCliInputs {
   allFiles: boolean
   provider?: string
   configFile?: string
+  binary?: string
 }
 
 /** Builds the argument list for `xget <target> [flags]` from the action inputs. */
@@ -47,6 +48,9 @@ export function buildXgetArgs(inputs: XgetCliInputs): string[] {
   }
   if (inputs.allFiles) {
     args.push('--all')
+  }
+  if (inputs.binary) {
+    args.push('--binary', inputs.binary)
   }
   if (inputs.provider) {
     args.push('--provider', inputs.provider)

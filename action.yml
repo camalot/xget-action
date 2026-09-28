@@ -26,6 +26,11 @@ inputs:
     required: false
     default: ''
 
+  binary:
+    description: 'Rename a single extracted file to this name, keeping its extension (ignored when multiple files are extracted)'
+    required: false
+    default: ''
+
   prerelease:
     description: 'Whether to include prerelease versions of the package'
     required: false
