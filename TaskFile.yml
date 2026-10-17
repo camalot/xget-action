@@ -1,0 +1,79 @@
+---
+
+version: '3'
+
+vars: {}
+
+tasks:
+
+  tools:verify:
+    silent: true
+    internal: true
+    desc: Verify required tools are installed
+    cmds:
+      - command -v pnpm >/dev/null 2>&1 || { echo >&2 "pnpm is required but it's not installed. Aborting."; exit 1; }
+      - command -v node >/dev/null 2>&1 || { echo >&2 "node is required but it's not installed. Aborting."; exit 1; }
+
+  pre-commit:
+    deps:
+      - tools:verify
+    desc: Run pre-commit checks
+    cmds:
+      - task format:fix
+      - task lint:fix
+      - task build
+      - task test:coverage
+
+  lint:check:
+    deps: 
+      - tools:verify
+    desc: Lint the project
+    cmds:
+      - pnpx eslint "**/*.ts" --config .github/linters/eslint.config.js
+
+  lint:fix:
+    deps: 
+      - tools:verify
+    desc: Fix lint issues
+    cmds:
+      - pnpx eslint "**/*.ts" --fix --config .github/linters/eslint.config.js
+
+  test:coverage:
+    deps: 
+      - tools:verify
+    desc: Run tests with coverage
+    cmds:
+      - node --experimental-vm-modules ./node_modules/jest/bin/jest.js --runInBand --coverage
+      # - pnpx jest --coverage --runInBand 
+
+  build:
+    deps: 
+      - tools:verify
+    desc: Build the project
+    cmds:
+      - pnpx @vercel/ncc build --minify -o dist/setup src/setup-xget.ts
+      - pnpx @vercel/ncc build --minify -o dist/cache-save src/cache-save.ts
+
+  ci:
+    deps:
+      - tools:verify
+    desc: Run continuous integration tasks
+    cmds:
+      - task: format:check
+      - task: lint:check
+      - task: build
+      - task: test:coverage
+
+  format:fix:
+    deps: 
+      - tools:verify
+    desc: Format the project
+    cmds:
+      - pnpx prettier --no-error-on-unmatched-pattern --write "**/*.{ts,yml,yaml}"
+    
+  format:check:
+    deps: 
+      - tools:verify
+    desc: Check the format of the project
+    cmds:
+      - pnpx prettier --no-error-on-unmatched-pattern --check "**/*.{ts,yml,yaml}"
