@@ -42,12 +42,19 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
 
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 12
+
       - uses: actions/setup-node@v7
         with:
           node-version-file: .nvmrc
+          cache: pnpm
 
-      - run: npm ci
-      - run: npm test
+      - uses: go-task/setup-task@v1
+
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm test
 
       - uses: camalot/actions/smells/test/coverage@v1
 
@@ -68,19 +75,26 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
 
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 12
+
       - uses: actions/setup-node@v7
         with:
           node-version-file: .nvmrc
+          cache: pnpm
 
-      - run: npm ci
-      - run: npm run build
+      - uses: go-task/setup-task@v1
+
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm run build
 
       # dist/ is the distributed artifact for this action; fail if a
       # contributor forgot to commit the rebuilt output.
       - name: Verify dist/ is up to date
         run: |
           if [ -n "$(git status --porcelain dist/)" ]; then
-            echo "::error::dist/ is out of date. Run 'npm run build' and commit the result."
+            echo "::error::dist/ is out of date. Run 'pnpm run build' and commit the result."
             git status --porcelain dist/
             git diff -- dist/
             exit 1
