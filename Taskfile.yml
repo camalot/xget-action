@@ -94,10 +94,20 @@ tasks:
   build:
     deps:
       - tools:verify
-    desc: Build the project
+    desc: Build the project using the canonical Linux environment
     cmds:
-      - pnpx @vercel/ncc build --minify -o dist/setup src/setup-xget.ts
-      - pnpx @vercel/ncc build --minify -o dist/cache-save src/cache-save.ts
+      - cmd: pnpm run build
+        platforms: [linux]
+      - cmd: >-
+          docker run --rm
+          --mount "type=bind,source={{.ROOT_DIR}},target=/workspace"
+          --mount type=volume,target=/workspace/node_modules
+          --workdir /workspace
+          node:26.12.0-bookworm-slim
+          sh -ec "npm install --global pnpm@12.14.0 &&
+          pnpm install --frozen-lockfile &&
+          pnpm run build"
+        platforms: [windows, darwin]
 
   ci:
     deps:

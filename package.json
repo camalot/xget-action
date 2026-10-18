@@ -10,7 +10,7 @@
   },
   "scripts": {
     "ci": "task ci",
-    "build": "task build",
+    "build": "ncc build --minify -o dist/setup src/setup-xget.ts && ncc build --minify -o dist/cache-save src/cache-save.ts",
     "format": "task format:fix",
     "format-check": "task format:check",
     "lint": "task lint:check",

@@ -16,6 +16,22 @@ binary from a GitHub release.
   install the target binary to `/usr/local/bin`. If `package` is omitted,
   `xget` is installed and left on `PATH` without being run.
 
+## Development
+
+Install dependencies with `pnpm install --frozen-lockfile`, then run `pnpm test`
+and `pnpm run build`. These commands require [Task](https://taskfile.dev/).
+
+Committed bundles are built on Linux so CI can verify them byte-for-byte.
+On Windows and macOS, `pnpm run build` requires Docker with Linux containers
+and builds using Node 26.12.0 and pnpm 12.14.0 in an isolated dependency
+volume. On Linux, it uses the locally installed dependencies; use the Node
+version from `.nvmrc` and pnpm 12.14.0 to match the container.
+Both paths use the lockfile-installed `ncc`, not a separately downloaded tool.
+Commit the resulting `dist/` changes along with source changes.
+
+`pnpm run build:bundle` is the internal native bundling command used by the
+Linux build; do not use it on Windows or macOS to regenerate committed bundles.
+
 ## Usage
 
 ```yaml
