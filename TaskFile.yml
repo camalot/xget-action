@@ -1,7 +1,22 @@
 ---
 version: '3'
 
-vars: {}
+dotenv:
+  - .secrets
+  - .env
+
+vars:
+  GITHUB_TOKEN_NAME: GITHUB_TOKEN
+
+includes:
+  codeql: 
+    # as git over ssh
+    #taskfile: 'git@github.com:camalot/actions.git//smells/codeql/TaskFile.yml?ref=main'
+    # as https
+    # taskfile: https://github.com/camalot/actions/raw/refs/heads/main/smells/codeql/TaskFile.yml
+    # as git over https
+    taskfile: https://github.com/camalot/actions.git//smells/codeql/TaskFile.yml?ref=main
+    flatten: true
 
 tasks:
   require-xget:
@@ -70,6 +85,11 @@ tasks:
     cmds:
       - node --experimental-vm-modules ./node_modules/jest/bin/jest.js --runInBand --coverage
       # - pnpx jest --coverage --runInBand
+
+  codeql:
+    cmds:
+      - task: codeql:actions:.
+      - task: codeql:javascript:src
 
   build:
     deps:
