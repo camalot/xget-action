@@ -84,7 +84,9 @@ async function run(): Promise<void> {
     core.info(`Using xget ${version}`)
 
     if (!inputs.package) {
-      core.info('No package input provided; xget was installed but will not be run.')
+      core.info(
+        'No package input provided; xget was installed but will not be run.'
+      )
       return
     }
 

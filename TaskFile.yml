@@ -1,10 +1,15 @@
 ---
-
 version: '3'
 
 vars: {}
 
 tasks:
+  require-xget:
+    silent: true
+    internal: true
+    desc: Ensure xget is installed in the system PATH
+    cmds:
+      - command -v xget >/dev/null 2>&1 || { echo "xget is required but not installed"; exit 1; }
 
   tools:verify:
     silent: true
@@ -14,40 +19,60 @@ tasks:
       - command -v pnpm >/dev/null 2>&1 || { echo >&2 "pnpm is required but it's not installed. Aborting."; exit 1; }
       - command -v node >/dev/null 2>&1 || { echo >&2 "node is required but it's not installed. Aborting."; exit 1; }
 
+  tools:typos:
+    internal: true
+    deps:
+      - require-xget
+      - tools:verify
+    desc: Install typos
+    if: '! command -v typos >/dev/null 2>&1'
+    status:
+      - '! command -v typos >/dev/null 2>&1'
+    cmds:
+      - xget install crate-ci/typos --to ~/.local/bin/ --non-interactive
+
+  typos:check:
+    deps:
+      - tools:typos
+    desc: Check for typos
+    cmds:
+      - typos --config .typos.toml
+
   pre-commit:
     deps:
       - tools:verify
     desc: Run pre-commit checks
     cmds:
-      - task format:fix
-      - task lint:fix
-      - task build
-      - task test:coverage
+      - task: format:fix
+      - task: typos:check
+      - task: lint:fix
+      - task: build
+      - task: test:coverage
 
   lint:check:
-    deps: 
+    deps:
       - tools:verify
     desc: Lint the project
     cmds:
       - pnpx eslint "**/*.ts" --config .github/linters/eslint.config.js
 
   lint:fix:
-    deps: 
+    deps:
       - tools:verify
     desc: Fix lint issues
     cmds:
       - pnpx eslint "**/*.ts" --fix --config .github/linters/eslint.config.js
 
   test:coverage:
-    deps: 
+    deps:
       - tools:verify
     desc: Run tests with coverage
     cmds:
       - node --experimental-vm-modules ./node_modules/jest/bin/jest.js --runInBand --coverage
-      # - pnpx jest --coverage --runInBand 
+      # - pnpx jest --coverage --runInBand
 
   build:
-    deps: 
+    deps:
       - tools:verify
     desc: Build the project
     cmds:
@@ -60,19 +85,20 @@ tasks:
     desc: Run continuous integration tasks
     cmds:
       - task: format:check
+      - task: typos:check
       - task: lint:check
-      - task: build
       - task: test:coverage
+      - task: build
 
   format:fix:
-    deps: 
+    deps:
       - tools:verify
     desc: Format the project
     cmds:
       - pnpx prettier --no-error-on-unmatched-pattern --write "**/*.{ts,yml,yaml}"
-    
+
   format:check:
-    deps: 
+    deps:
       - tools:verify
     desc: Check the format of the project
     cmds:

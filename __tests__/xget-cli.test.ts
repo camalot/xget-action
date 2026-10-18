@@ -17,7 +17,7 @@ describe('buildXgetArgs', () => {
       '/usr/local/bin',
       '--verify',
       '--non-interactive',
-      '--untracked',
+      '--untracked'
     ])
   })
 
@@ -30,7 +30,7 @@ describe('buildXgetArgs', () => {
         assetFilters: ['~\\.tar\\.gz'],
         ignore: ['~\\.sbom\\.json$'],
         skipVerify: false,
-        allFiles: false,
+        allFiles: false
       })
     ).toEqual([
       'fake/package',
@@ -45,7 +45,7 @@ describe('buildXgetArgs', () => {
       '/usr/local/bin',
       '--verify',
       '--non-interactive',
-      '--untracked',
+      '--untracked'
     ])
   })
 
@@ -58,7 +58,7 @@ describe('buildXgetArgs', () => {
         ignore: ['~\\.sbom\\.json$', '~\\.sig$'],
         skipVerify: false,
         fileFilter: '',
-        allFiles: false,
+        allFiles: false
       })
     ).toEqual([
       'fake/package',
@@ -74,7 +74,7 @@ describe('buildXgetArgs', () => {
       '/usr/local/bin',
       '--verify',
       '--non-interactive',
-      '--untracked',
+      '--untracked'
     ])
   })
 
@@ -85,7 +85,7 @@ describe('buildXgetArgs', () => {
         prerelease: false,
         skipVerify: false,
         allFiles: false,
-        to: '/custom/bin',
+        to: '/custom/bin'
       })
     ).toEqual([
       'fake/package',
@@ -93,7 +93,7 @@ describe('buildXgetArgs', () => {
       '/custom/bin',
       '--verify',
       '--non-interactive',
-      '--untracked',
+      '--untracked'
     ])
   })
 
@@ -104,7 +104,7 @@ describe('buildXgetArgs', () => {
         tag: 'latest',
         prerelease: false,
         skipVerify: false,
-        allFiles: false,
+        allFiles: false
       })
     ).toEqual([
       'fake/package',
@@ -112,7 +112,7 @@ describe('buildXgetArgs', () => {
       '/usr/local/bin',
       '--verify',
       '--non-interactive',
-      '--untracked',
+      '--untracked'
     ])
   })
 
@@ -122,9 +122,15 @@ describe('buildXgetArgs', () => {
         package: 'fake/package',
         prerelease: false,
         skipVerify: true,
-        allFiles: false,
+        allFiles: false
       })
-    ).toEqual(['fake/package', '--to', '/usr/local/bin', '--non-interactive', '--untracked'])
+    ).toEqual([
+      'fake/package',
+      '--to',
+      '/usr/local/bin',
+      '--non-interactive',
+      '--untracked'
+    ])
   })
 
   it('uses explicit args without adding automatic input flags', () => {
@@ -151,7 +157,7 @@ describe('buildXgetArgs', () => {
         prerelease: false,
         skipVerify: false,
         fileFilter: 'some-file.txt',
-        allFiles: false,
+        allFiles: false
       })
     ).toEqual([
       'fake/package',
@@ -161,17 +167,17 @@ describe('buildXgetArgs', () => {
       'some-file.txt',
       '--verify',
       '--non-interactive',
-      '--untracked',
+      '--untracked'
     ])
   })
-  
+
   it('includes --all when allFiles is true', () => {
     expect(
       buildXgetArgs({
         package: 'fake/package',
         prerelease: false,
         skipVerify: false,
-        allFiles: true,
+        allFiles: true
       })
     ).toEqual([
       'fake/package',
@@ -180,7 +186,7 @@ describe('buildXgetArgs', () => {
       '--all',
       '--verify',
       '--non-interactive',
-      '--untracked',
+      '--untracked'
     ])
   })
 
@@ -202,7 +208,7 @@ describe('buildXgetArgs', () => {
       'custom-provider',
       '--verify',
       '--non-interactive',
-      '--untracked',
+      '--untracked'
     ])
   })
   it('includes --config when configFile is specified', () => {
@@ -212,7 +218,7 @@ describe('buildXgetArgs', () => {
         prerelease: false,
         skipVerify: false,
         allFiles: false,
-        configFile: '/path/to/config.yml',
+        configFile: '/path/to/config.yml'
       })
     ).toEqual([
       'fake/package',
@@ -222,7 +228,7 @@ describe('buildXgetArgs', () => {
       '--non-interactive',
       '--untracked',
       '--config',
-      '/path/to/config.yml',
+      '/path/to/config.yml'
     ])
   })
 })
