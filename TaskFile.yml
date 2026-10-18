@@ -15,7 +15,7 @@ includes:
     # as https
     # taskfile: https://github.com/camalot/actions/raw/refs/heads/main/smells/codeql/TaskFile.yml
     # as git over https
-    taskfile: https://github.com/camalot/actions.git//smells/codeql/TaskFile.yml?ref=main
+    taskfile: https://github.com/camalot/actions.git//smells/codeql/TaskFile.yml?ref=v1
     flatten: true
 
 tasks:
