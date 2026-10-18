@@ -1,10 +1,10 @@
-name: "CodeQL Advanced"
+name: 'CodeQL Advanced'
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ['main']
   pull_request:
-    branches: [ "main" ]
+    branches: ['main']
   schedule:
     - cron: '25 9 * * 0'
 
@@ -33,19 +33,19 @@ jobs:
       fail-fast: false
       matrix:
         include:
-        - language: actions
-          build-mode: none
-        - language: javascript
-          build-mode: none
+          - language: actions
+            build-mode: none
+          - language: javascript
+            build-mode: none
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v7
-      with:
-        fetch-depth: 0
-        persist-credentials: false
+      - name: Checkout repository
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          persist-credentials: false
 
-    - name: CodeQL Analysis ${{ matrix.language }}
-      uses: camalot/actions/smells/codeql@main
-      with:
-        language: ${{ matrix.language }}
-        build-mode: ${{ matrix.build-mode }}
+      - name: CodeQL Analysis ${{ matrix.language }}
+        uses: camalot/actions/smells/codeql@main
+        with:
+          language: ${{ matrix.language }}
+          build-mode: ${{ matrix.build-mode }}
