@@ -18,6 +18,9 @@ jobs:
         with:
           fetch-depth: 0
           persist-credentials: false
+      - uses: crate-ci/typos@v1.51.1
+        with:
+          config: .typos.toml
 
       - name: Lint Codebase
         uses: camalot/actions/smells/lint@v1

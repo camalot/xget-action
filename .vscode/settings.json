@@ -1,5 +1,33 @@
 {
   "cSpell.words": [
     "camalot"
-  ]
+  ],
+  "workspaceTasks.enabledTaskTypes": {
+    "ant": false,
+    "ruby": false,
+    "bitbucket": false,
+    "cake": false,
+    "cmake": false,
+    "composer": false,
+    "cargo": false,
+    "cargo-make": false,
+    "deno": false,
+    "gitlab-ci": false,
+    "go": false,
+    "gradle": false,
+    "grunt": false,
+    "gulp": false,
+    "jupyter": false,
+    "just": false,
+    "make": false,
+    "maven": false,
+    "msbuild": false,
+    "npm": false,
+    "pipenv": false,
+    "mise": false,
+    "poe": false,
+    "poetry": false,
+    "rake": false,
+    "pnpm": true
+  }
 }
