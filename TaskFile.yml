@@ -9,7 +9,7 @@ vars:
   GITHUB_TOKEN_NAME: GITHUB_TOKEN
 
 includes:
-  codeql: 
+  codeql:
     # as git over ssh
     #taskfile: 'git@github.com:camalot/actions.git//smells/codeql/TaskFile.yml?ref=main'
     # as https
