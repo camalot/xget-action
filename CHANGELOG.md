@@ -1,4 +1,108 @@
 
+## [v1.4.0](https://github.com/camalot/xget-action/releases/tag/vv1.4.0) - 2026-10-18
+
+### 🚀 FEATURES
+
+#### _GENERAL_
+
+- Added support for xget install --binary flag -[@camalot](https://github.com/camalot)
+
+
+### 🐛 BUG FIXES
+
+#### _GENERAL_
+
+- Set correct indentation -[@camalot](https://github.com/camalot)
+
+- fix: set correct indentation -[@camalot](https://github.com/camalot)
+
+- Rename TaskFile.yml to Taskfile.yml -[@camalot](https://github.com/camalot)
+
+- Run build after changes -[@camalot](https://github.com/camalot)
+
+- Format fix -[@camalot](https://github.com/camalot)
+
+- Change build steps for dist verification -[@camalot](https://github.com/camalot)
+
+
+### 💼 OTHER
+
+#### _GENERAL_
+
+- Merge branch 'main' of github.com:camalot/xget-action -[@camalot](https://github.com/camalot)
+
+- Main' of github.com:camalot/xget-action: -[@camalot](https://github.com/camalot)
+
+
+### 📚 DOCUMENTATION
+
+#### _GENERAL_
+
+- Added AGENTS.md -[@camalot](https://github.com/camalot)
+
+- docs: added AGENTS.md -[@camalot](https://github.com/camalot)
+
+- Update readme docs -[@camalot](https://github.com/camalot)
+
+
+### ⚙️ MISCELLANEOUS TASKS
+
+
+#### _ACTION_
+- Added typos workflow to ci -[@camalot](https://github.com/camalot)
+
+
+#### _LINT_
+- Lint fixes -[@camalot](https://github.com/camalot)
+
+
+#### _MERGE_
+- Merge main branch -[@camalot](https://github.com/camalot)
+
+
+#### _QUALITY_
+- Added typos config to repo -[@camalot](https://github.com/camalot)
+
+
+#### _REPO_
+- Dependencies and format cleanup -[@camalot](https://github.com/camalot)
+
+- Added codeql checks -[@camalot](https://github.com/camalot)
+
+- Update taskfile reference -[@camalot](https://github.com/camalot)
+
+- Pnpm setup for workflows -[@camalot](https://github.com/camalot)
+
+#### _GENERAL_
+
+- chore(release): update changelog for v1.3.0 -[@camalot](https://github.com/camalot)
+
+
+## GitHub
+
+### 💛 Contributors
+
+
+- [@camalot](https://github.com/camalot)
+## 📈 Commit Statistics
+
+
+- `21` commits contributed to the release.
+- `21` days have passed between the first and last commit.
+- `16` commits parsed as conventional.
+- `0` linked issues detected in commits.
+- `25` days  have passed between releases.
+
+
+![Statistics](https://quickchart.io/chart?c={type:'bar',data:{labels:['Commits','Contributors','Days%20Between%20Commits','Conventional%20Commits','Referenced%20Links','Days%20Since%20Last%20Release'],datasets:[{label:'Release',data:[21,1,21,16,0,25]}]}})
+
+
+
+---
+
+
+**Full Changelog**: https://github.com/camalot/xget-action/compare/v1.3.0...v1.4.0
+
 ## [v1.3.0](https://github.com/camalot/xget-action/releases/tag/vv1.3.0) - 2026-09-23
 
 ### 🚀 FEATURES
