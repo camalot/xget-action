@@ -6,5 +6,6 @@ remote:
         Authorization: Bearer {{ env "{{.GITHUB_TOKEN_NAME}}"}}
   trusted-hosts:
     - github.com
+    - raw.githubusercontent.com
   cache-dir: .task
 temp-dir: .task
