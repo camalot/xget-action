@@ -45,7 +45,7 @@ jobs:
           persist-credentials: false
 
       - name: CodeQL Analysis ${{ matrix.language }}
-        uses: camalot/actions/smells/codeql@main
+        uses: camalot/actions/smells/codeql@v1
         with:
           language: ${{ matrix.language }}
           build-mode: ${{ matrix.build-mode }}
