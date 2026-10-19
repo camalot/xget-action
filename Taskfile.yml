@@ -10,9 +10,8 @@ vars:
 
 includes:
   codeql:
-    taskfile: 'git@github.com:camalot/actions.git//smells/codeql/Taskfile.yml?ref=v1'
+    taskfile: https://github.com/camalot/actions.git//smells/codeql/TaskFile.yml?ref=v1
     flatten: true
-    internal: true
 
 tasks:
   require-xget:
