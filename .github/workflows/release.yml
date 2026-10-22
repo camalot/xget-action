@@ -92,7 +92,7 @@ jobs:
           node-version-file: .nvmrc
           cache: pnpm
 
-      - uses: go-task/setup-task@v1
+      - uses: go-task/setup-task@v2
 
       - run: pnpm install --frozen-lockfile
       - run: pnpm test
