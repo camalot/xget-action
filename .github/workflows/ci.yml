@@ -18,7 +18,7 @@ jobs:
         with:
           fetch-depth: 0
           persist-credentials: false
-      - uses: crate-ci/typos@v1.51.1
+      - uses: crate-ci/typos@v1.52.0
         with:
           config: .typos.toml
 
