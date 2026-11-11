@@ -39,7 +39,7 @@
     "@actions/http-client": "^4.0.1",
     "@actions/io": "^3.0.2",
     "@actions/tool-cache": "^4.0.0",
-    "semver": "^7.8.5",
+    "semver": "^7.8.6",
     "smol-toml": "^1.9.1"
   },
   "overrides": {
